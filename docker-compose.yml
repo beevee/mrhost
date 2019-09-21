@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis:/data
+
+  mrhost:
+    build: .
+    environment:
+      - MISTERHOST_BOT_TOKEN
+      - MISTERHOST_BOT_PROXY
+      - MISTERHOST_REDIS_ADDR
+    depends_on:
+      - redis
+    links:
+      - redis:localhost
+
+volumes:
+  redis:
